@@ -1,53 +1,94 @@
-Setup VVV (Varying Vagrant Vagrants) - Vagrant configuration focused on WordPress development
+# Stena
 
-For more info about VVV visit: https://varyingvagrantvagrants.org/
+Stena is a climbing project to collect and represent all the climbing routes in Serbia.
 
-1. Clone VVV
+## Getting started
 
-This is the recommended method for installing VVV. Clone the main VVV repo into a local directory:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-git clone -b master git://github.com/Varying-Vagrant-Vagrants/VVV.git ~/vagrant-local
+## Instructions to setup project:
 
+### 1. Install and setup VVV
 
-2. Starting VVV
+VVV (Varying Vagrant Vagrants) is vagrant configuration focused on WordPress development.
 
-In a terminal, change into the new directory with cd vagrant-local.
+To install VVV and add new website, follow guidelines from offical VVV website: https://varyingvagrantvagrants.org/
 
-Start the Vagrant environment with vagrant up.
+### 2. Clone the project (make sure it's cloned to `public_html` directory in your project)
 
-Be patient as the magic happens. This could take a while on the first run as your local machine downloads the required files.
+Once you have VVV up and running and new website successfully added, do the following:
 
-Turning VVV On: vagrant up
-Turning VVV Off: vagrant halt
-Restarting VVV: vagrant reload
-Reloading config/config.yml: vagrant reload --provision
+* Start newly installed VVV vagrant and ssh to VM:
 
-3. Adding a Single Site
+```
+cd ~/vagrant-local/ ("vagrant-local" is a directory where VVV is installed. Use correct name if it's different)
+```
 
-To do this, we will update the sites list by editing the file config/config.yml in the main VVV folder like this:
+```
+vagrant up
+```
 
-sites:
+```
+vagrant ssh
+```
 
-  .... other sites...
+* Go to your project directory and delete `public_html`:
 
-  example:
-    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
-    hosts:
-      - example.test
+```
+cd /srv/www/<my-project>
+```
 
-  .... other sites...
+```
+rm -rf public_html
+```
 
-  multisite-example:
-    repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template.git
-    hosts:
-      - multisite.test
-      - subsite.multisite.test
-    custom:
-      wp_type: subdomain # or subdirectory
+* Clone the project (you need to ask admin of this project to add your SSH public key to repo)
 
-Then, save config/config.yml and run vagrant up --provision to update VVV with the new site. Always reprovision after making changes to the config files. Be sure to indent correctly as whitespace matters in YAML files, VVV prefers to indent using 2 spaces.
+```
+git clone git@github.com:skordus/stena.git public_html
+```
 
-Once vagrant reload --provision finishes, you will have a brand new WordPress install! We can now visit http://example.test to view our site, or open the www/example folder in an editor to start making changes to our site. To log in, use admin and password.
+You might need to re-clone the project as descibed above every time after running:
 
-For more info about VVV visit: https://varyingvagrantvagrants.org/
+```
+vagrant reload --provision
+```
 
+### 3. Connect database:
+
+* Go to `public_html` directory of your project on VVV: `/vagrant-local/www/my-project/public_html/`, create `wp-config.php` directory and copy/paste entire code from `wp-config-sample.php`
+
+* Edit database credentials in `wp-config.php`:
+
+```
+define( 'DB_NAME', '<database_name_here>' );
+define( 'DB_USER', '<username_here>' );  // Default for VVV is "wp"
+define( 'DB_PASSWORD', '<password_here>' );  // Default for VVV is "wp"
+```
+
+### 4. Import database from live server:
+
+Export database from live server and import it locally. You can use mysql client, phpMyAdmin or some other DBMS interface.
+To use phpMyAdmin with VVV, open http://vvv.test/database-admin and login with `root` as username and password.
+
+## Useful commands
+
+Turn VVV on:
+```
+vagrant up
+```
+
+Turn VVV off:
+```
+vagrant halt
+```
+
+Restarting VVV:
+```
+vagrant reload
+```
+
+Reloading `config/config.yml`:
+```
+vagrant reload --provision
+```
