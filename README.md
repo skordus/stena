@@ -64,12 +64,12 @@ $ rm -rf public_html
 $ git clone git@github.com:skordus/stena.git public_html
 ```
 
-> * You need to ask admin of this project to add your SSH public key to repo
-> * Make sure it's cloned to `public_html` directory under your project root
+> * :warning: You need to ask admin of this project to add your SSH public key to repo
+> * :warning: Make sure it's cloned to `public_html` directory under your project root
 
 ---
 
-> You might need to re-clone the project as described above every time after running:
+> :warning: You might need to re-clone the project as described above every time after provision:
 
 ```
 $ vagrant reload --provision
