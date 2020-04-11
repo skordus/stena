@@ -6,52 +6,73 @@ Stena is a climbing project to collect and represent all the climbing routes in 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## Instructions to setup project:
+## Instructions to setup the project:
 
 ### 1. Install and setup VVV
 
-VVV (Varying Vagrant Vagrants) is vagrant configuration focused on WordPress development.
+**VVV (Varying Vagrant Vagrants)** is Vagrant configuration focused on WordPress development.
 
-To install VVV and add new website, follow guidelines from offical VVV website: https://varyingvagrantvagrants.org/
+To install VVV and add new website please follow guidelines from official VVV website: https://varyingvagrantvagrants.org/
 
-### 2. Clone the project (make sure it's cloned to `public_html` directory in your project)
+### 2. Clone the project
 
-Once you have VVV up and running and new website successfully added, do the following:
+Do the following, once you have VVV up and running and new website successfully added:
 
-* Start newly installed VVV vagrant and ssh to VM:
-
-```
-cd ~/vagrant-local/ ("vagrant-local" is a directory where VVV is installed. Use correct name if it's different)
-```
+> Go to vagrant directory ("vagrant-local" is a directory where VVV is installed. Use correct name if it's different)
 
 ```
-vagrant up
+$ cd ~/vagrant-local/
 ```
 
-```
-vagrant ssh
-```
+---
 
-* Go to your project directory and delete `public_html`:
+> Start vagrant
 
 ```
-cd /srv/www/<my-project>
+$ vagrant up
 ```
 
-```
-rm -rf public_html
-```
+---
 
-* Clone the project (you need to ask admin of this project to add your SSH public key to repo)
+> SSH to VM
 
 ```
-git clone git@github.com:skordus/stena.git public_html
+$ vagrant ssh
 ```
 
-You might need to re-clone the project as descibed above every time after running:
+---
+
+> Go to project root directory
 
 ```
-vagrant reload --provision
+$ cd /srv/www/<my-project>
+```
+
+---
+
+> Remove public_html
+
+```
+$ rm -rf public_html
+```
+
+---
+
+> Clone the project 
+
+```
+$ git clone git@github.com:skordus/stena.git public_html
+```
+
+> * You need to ask admin of this project to add your SSH public key to repo
+> * Make sure it's cloned to `public_html` directory under your project root
+
+---
+
+> You might need to re-clone the project as described above every time after running:
+
+```
+$ vagrant reload --provision
 ```
 
 ### 3. Connect database:
@@ -73,22 +94,32 @@ To use phpMyAdmin with VVV, open http://vvv.test/database-admin and login with `
 
 ## Useful commands
 
-Turn VVV on:
+> Turn VVV on:
+
 ```
-vagrant up
+$ vagrant up
 ```
 
-Turn VVV off:
+---
+
+> Turn VVV off:
+
 ```
-vagrant halt
+$ vagrant halt
 ```
 
-Restarting VVV:
+---
+
+> Restarting VVV:
+
 ```
-vagrant reload
+$ vagrant reload
 ```
 
-Reloading `config/config.yml`:
+---
+
+> Reloading `config/config.yml`:
+
 ```
-vagrant reload --provision
+$ vagrant reload --provision
 ```
